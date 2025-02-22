@@ -14,10 +14,15 @@ namespace SeekDeeper
             }
 
             DiscordClientBuilder builder = DiscordClientBuilder.CreateDefault
-                (
-                    token: token,
-                    intents: DiscordIntents.GuildMessages | DiscordIntents.MessageContents
-                );
+            (
+                token: token,
+                intents: DiscordIntents.GuildMessages | DiscordIntents.MessageContents
+            );
+
+            builder.ConfigureEventHandlers
+            (
+                _event => _event.HandleMessageCreated(async (_client, _args) => await Handler.Run(_client, _args))
+            );
 
             DiscordClient client = builder.Build();
 
