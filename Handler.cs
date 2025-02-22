@@ -20,7 +20,7 @@ namespace SeekDeeper
                 return;
             }
 
-            AI ai = new("http://deepseek.local:11434");
+            AI ai = new("http://192.168.0.12:11434");
 
             bool typing = true;
 
