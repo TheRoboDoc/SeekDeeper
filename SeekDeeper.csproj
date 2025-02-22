@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="DSharpPlus" Version="5.0.0-nightly-02459" />
+    <PackageReference Include="OllamaSharp" Version="5.1.1" />
   </ItemGroup>
 
 </Project>
