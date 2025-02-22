@@ -1,10 +1,29 @@
-﻿namespace SeekDeeper
+﻿using DSharpPlus;
+
+namespace SeekDeeper
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            string? token = Environment.GetEnvironmentVariable("SeekDeepToken");
+
+            if (token == null)
+            {
+                return;
+            }
+
+            DiscordClientBuilder builder = DiscordClientBuilder.CreateDefault
+                (
+                    token: token,
+                    intents: DiscordIntents.GuildMessages | DiscordIntents.MessageContents
+                );
+
+            DiscordClient client = builder.Build();
+
+            await client.ConnectAsync();
+
+            await Task.Delay(-1);
         }
     }
 }
