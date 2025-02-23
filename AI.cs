@@ -39,6 +39,7 @@ namespace SeekDeeper
 
                     You reply without this formatting.
                     To mention a user use this format: <@{userID}>
+                    Limit message text formatting to the minumum or to what Discord supports
                     """;
 
                 messages.Add
