@@ -1,7 +1,7 @@
-﻿using OllamaSharp;
-using DSharpPlus.Entities;
-using OllamaSharp.Models.Chat;
+﻿using DSharpPlus.Entities;
 using Microsoft.Extensions.AI;
+using OllamaSharp;
+using OllamaSharp.Models.Chat;
 
 namespace SeekDeeper
 {
