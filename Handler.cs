@@ -38,7 +38,7 @@ namespace SeekDeeper
 
             typing = false;
 
-            if (responseRaw != null)
+            if (responseRaw == null)
             {
                 await args.Message.RespondAsync("System: Failed to generate a response");
             }

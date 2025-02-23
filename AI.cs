@@ -1,5 +1,4 @@
 ﻿using DSharpPlus.Entities;
-using Microsoft.Extensions.AI;
 using OllamaSharp;
 using OllamaSharp.Models.Chat;
 
@@ -25,9 +24,9 @@ namespace SeekDeeper
         {
             return await Task.Run(() =>
             {
-                List<DiscordMessage> rawMessages = (List<DiscordMessage>)channel.GetMessagesBeforeAsync(triggerMessage.Id, limit: 20);
+                List<DiscordMessage> rawMessages = channel.GetMessagesBeforeAsync(triggerMessage.Id, limit: 20).ToBlockingEnumerable().ToList();
 
-                List<ChatMessage> messages = [];
+                List<Message> messages = [];
 
                 string setupMessage =
                     """
@@ -44,7 +43,7 @@ namespace SeekDeeper
 
                 messages.Add
                 (
-                    new ChatMessage(Microsoft.Extensions.AI.ChatRole.System, setupMessage)
+                    new Message(ChatRole.System, setupMessage)
                 );
 
                 foreach (DiscordMessage rawMessage in rawMessages)
@@ -56,19 +55,20 @@ namespace SeekDeeper
 
                     if (rawMessage.Author.IsCurrent)
                     {
-                        messages.Add(new ChatMessage(Microsoft.Extensions.AI.ChatRole.Assistant, $"{rawMessage.Author.Username} | {rawMessage.Author.Id}: {rawMessage.Content}"));
+                        messages.Add(new Message(ChatRole.Assistant, $"{rawMessage.Author.Username} | {rawMessage.Author.Id}: {rawMessage.Content}"));
                     }
                     else
                     {
-                        messages.Add(new ChatMessage(Microsoft.Extensions.AI.ChatRole.User, $"{rawMessage.Author.Username} | {rawMessage.Author.Id}: {rawMessage.Content}"));
+                        messages.Add(new Message(ChatRole.User, $"{rawMessage.Author.Username} | {rawMessage.Author.Id}: {rawMessage.Content}"));
                     }
                 }
 
-                messages.Add(new ChatMessage(Microsoft.Extensions.AI.ChatRole.User, $"{triggerMessage.Author?.Username} | {triggerMessage.Author?.Id}: {triggerMessage.Content}"));
+                messages.Add(new Message(ChatRole.User, $"{triggerMessage.Author?.Username} | {triggerMessage.Author?.Id}: {triggerMessage.Content}"));
+                messages.Add(new Message(ChatRole.System, "As SeekDeeper, generate a response to the user"));
 
                 ChatRequest chatRequest = new()
                 {
-                    Messages = (IEnumerable<Message>)messages,
+                    Messages = messages,
                     Options = new OllamaSharp.Models.RequestOptions()
                     {
                         Temperature = 1,
