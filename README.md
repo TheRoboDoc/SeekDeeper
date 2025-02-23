@@ -8,3 +8,5 @@ This project uses the following libraries:
 - ### [OllamaSharp](https://github.com/awaescher/OllamaSharp)
 
 The project is made in **.NET 9.0**
+
+# [ADD TO YOUR SERVER](https://discord.com/oauth2/authorize?client_id=1342955845817733241)
