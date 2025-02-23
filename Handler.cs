@@ -34,9 +34,14 @@ namespace SeekDeeper
                 }
             });
 
-            string responseRaw = await ai.GenerateResponse(args.Message.Content);
+            string? responseRaw = await ai.GenerateResponse(args.Message, args.Channel);
 
             typing = false;
+
+            if (responseRaw != null)
+            {
+                await args.Message.RespondAsync("System: Failed to generate a response");
+            }
 
             string respnse = responseRaw.Split("</think>")[1];
 
